@@ -67,6 +67,5 @@ class CSDN(object):
 
 if __name__ == '__main__':
     csdn = CSDN()
-    # inputMaxTime = input(u'请输入列表访问次数\n')
-    inputMaxTime = 100
+    inputMaxTime = input(u'请输入列表访问次数\n')
     csdn.start(maxTime=int(inputMaxTime))
