@@ -7,7 +7,7 @@ config = {
     'port': 3306,
     'user': 'root',
     'password': 'admin',
-    'db': 'testDB',
+    'db': 'testDB',  # 先创建数据库testDB
     'charset': 'utf8',
     'cursorclass': pymysql.cursors.DictCursor,
 }
