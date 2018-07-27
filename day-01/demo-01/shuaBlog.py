@@ -1,5 +1,4 @@
-# - * - coding: utf - 8 -*-
-
+# -*- coding: utf-8 -*-
 import urllib.request
 import socket
 import time
@@ -7,6 +6,19 @@ import re
 import random
 
 # 在这里填写你要访问的博客地址
+'''
+blog_url = [
+    'http://blog.csdn.net/qq_34081993/article/details/79241730',
+    'http://blog.csdn.net/qq_34081993/article/details/79241047',
+    'http://blog.csdn.net/qq_34081993/article/details/79229784',
+    'http://blog.csdn.net/qq_34081993/article/details/79225558',
+    'http://blog.csdn.net/qq_34081993/article/details/79170650',
+    'http://blog.csdn.net/qq_34081993/article/details/79168073',
+    'http://blog.csdn.net/qq_34081993/article/details/79175792',
+    'http://blog.csdn.net/qq_34081993/article/details/79168049',
+    'http://blog.csdn.net/qq_34081993/article/details/78071369',
+    'http://blog.csdn.net/qq_34081993/article/details/79167963',
+]'''
 blog_url = [
     'https://blog.csdn.net/qq_34081993/article/details/80461123',
     'https://blog.csdn.net/qq_34081993/article/details/80330666',
@@ -19,8 +31,11 @@ user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'  # 伪装成Chrome
 
 
 class CSDN(object):
-    def __init__(self, blog_url=blog_url, csdn_url="http://blog.csdn.net/qq_34081993"):
+    def __init__(self,
+                 blog_url=blog_url,
+                 csdn_url="http://blog.csdn.net/qq_34081993"):
         self.blog_url = blog_url
+        self.csdn_url = csdn_url
         self.headers = {'User-Agent': user_agent, 'Referer': refererData}
 
     def openCsdn(self):
@@ -28,44 +43,57 @@ class CSDN(object):
         response = urllib.request.urlopen(req)
         thePage = response.read()
         response.close()
-        pattern = "访问：<span>(\d+)次</span>"
+        pattern = r"访问：<span>(\d+)次</span>"
         number = ''.join(re.findall(pattern, thePage))
         return number
 
-    def openBlog(self, link='http://blog.csdn.net/qq_34081993/article/details/79225558', timeout=60, sleepTime=22,
-                 maxTryNum=1):
+    def openBlog(
+            self,
+            link='http://blog.csdn.net/qq_34081993/article/details/79225558',
+            timeout=60,
+            sleepTime=22,
+            maxTryNum=1):
         tries = 0
         maxNum = 0
         # for tries in range(maxTryNum):
         while tries < maxTryNum:
             try:
                 socket.setdefaulttimeout
-                req = urllib.request.Request(link, None, self.headers)
-                resp = urllib.request.urlopen(req, None, timeout)
-                html = resp.read()
+                # req = urllib.request.Request(link, None, self.headers)
+                # resp = urllib.request.urlopen(req, None, timeout)
+                # html = resp.read()
                 print("Success!\t", )
                 print("Rest ", sleepTime, " seconds to continue...\n")
                 tries += 1
                 time.sleep(sleepTime)
-            except:
+            except Exception:
                 if tries < (maxTryNum):
                     maxNum += 1
                     continue
                 else:
-                    print("Has tried %d times to access blog link %s, all failed!", maxNum, link)
+                    print(
+                        "Has tried %d times to access blog link %s, all failed!"
+                        % (maxNum, link))
                     break
 
-    def start(self, maxTime=100, blOpenCsdn=False, sleepTimeStart=5, sleepTimeEnd=15, timeout=60):
+    def start(self,
+              maxTime=100,
+              blOpenCsdn=False,
+              sleepTimeStart=5,
+              sleepTimeEnd=15,
+              timeout=60):
         for i in range(maxTime * len(self.blog_url)):
             randomLink = random.choice(self.blog_url)
             print('This tinme the random_blog link is ', randomLink)
-            if blOpenCsdn == True:
+            if blOpenCsdn is True:
                 self.openCsdn()
-            self.openBlog(link=randomLink, sleepTime=random.uniform(sleepTimeStart, sleepTimeEnd), timeout=timeout)
+            self.openBlog(
+                link=randomLink,
+                sleepTime=random.uniform(sleepTimeStart, sleepTimeEnd),
+                timeout=timeout)
             print("Now is " + str(i + 1) + " times to acess blog link\n")
 
 
-if __name__ == '__main__':
-    csdn = CSDN()
-    inputMaxTime = input(u'请输入列表访问次数\n')
-    csdn.start(maxTime=int(inputMaxTime))
+csdn = CSDN()
+inputMaxTime = input(u'请输入列表访问次数\n')
+csdn.start(maxTime=int(inputMaxTime))
