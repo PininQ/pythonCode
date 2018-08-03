@@ -3,7 +3,7 @@ __author__ = 'QB'
 
 import socket
 '''
-TCP编程
+TCP 编程之客户端
 '''
 # 创建一个socket（AF_INET指定使用IPv4协议，SOCK_STREAM指定使用面向流的TCP协议）
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
