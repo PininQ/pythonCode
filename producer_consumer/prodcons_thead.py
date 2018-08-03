@@ -37,10 +37,10 @@ def main():
     queue = Queue()
     producer = Producer('【生产者】', queue)
     consumer = Consumer('【消费者】', queue)
-
+    # 开启生产者和消费者线程
     producer.start()
     consumer.start()
-
+    # 等待子线程执行完成
     producer.join()
     consumer.join()
     print('所有线程执行完成!')
