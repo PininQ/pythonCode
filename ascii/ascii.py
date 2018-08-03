@@ -5,9 +5,9 @@ from PIL import Image
 import argparse
 """
 图片转换成字符图片，很好玩
-运行：python ascii.py 图片名称 -o 文件输出路径(默认当前路径下) --width 字符画宽 --height 字符画高
+终端运行：python ascii.py 图片名称 -o 文件输出路径(默认当前路径下) --width 字符画宽 --height 字符画高
 示例：python ascii.py wm.png -o H:/out.txt --width 100 --height 100
-教程链接：https://www.shiyanlou.com/courses/370
+实验楼教程链接：https://www.shiyanlou.com/courses/370
 """
 # 命令行输入参数处理
 parser = argparse.ArgumentParser()

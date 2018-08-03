@@ -5,6 +5,9 @@ import time
 import re
 import random
 
+'''
+利用 Python 爬虫刷 CSDN 文章的访问量
+'''
 # 在这里填写你要访问的博客地址
 '''
 blog_url = [
@@ -31,9 +34,7 @@ user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'  # 伪装成Chrome
 
 
 class CSDN(object):
-    def __init__(self,
-                 blog_url=blog_url,
-                 csdn_url="http://blog.csdn.net/qq_34081993"):
+    def __init__(self, blog_url=blog_url, csdn_url="http://blog.csdn.net/qq_34081993"):
         self.blog_url = blog_url
         self.csdn_url = csdn_url
         self.headers = {'User-Agent': user_agent, 'Referer': refererData}
