@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'QB'
-
+'''
+一对一的生产者消费者 Demo
+'''
 
 # 消费者
 def consumer():
