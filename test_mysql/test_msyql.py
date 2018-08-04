@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 import pymysql.cursors
 '''
-连接本地的 MySQL 数据库，需先在数据库中创建 testDB 数据库，执行如下语句向 testDB 中插入一条记录
+连接本地的 MySQL 数据库，需先在数据库中创建 testDB 数据库，执行如下语句向 testDB 数据库中插入一条记录
 '''
 # 连接配置信息
 config = {
