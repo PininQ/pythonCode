@@ -1,6 +1,6 @@
 # pythonCode
 
-记录 Python 爬虫学习的点滴
+🎈 业余时间，使用 Python 做点有意思的 Demo。
 
 1. [CSDN博客访问量](https://github.com/qinbin52qiul/pythonCode/tree/master/csdn)
 2. [连接mysql数据库](https://github.com/qinbin52qiul/pythonCode/tree/master/test_mysql)
