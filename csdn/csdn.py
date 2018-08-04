@@ -8,20 +8,7 @@ import random
 '''
 利用 Python 爬虫刷 CSDN 文章的访问量
 '''
-# 在这里填写你要访问的博客地址
-'''
-blog_url = [
-    'http://blog.csdn.net/qq_34081993/article/details/79241730',
-    'http://blog.csdn.net/qq_34081993/article/details/79241047',
-    'http://blog.csdn.net/qq_34081993/article/details/79229784',
-    'http://blog.csdn.net/qq_34081993/article/details/79225558',
-    'http://blog.csdn.net/qq_34081993/article/details/79170650',
-    'http://blog.csdn.net/qq_34081993/article/details/79168073',
-    'http://blog.csdn.net/qq_34081993/article/details/79175792',
-    'http://blog.csdn.net/qq_34081993/article/details/79168049',
-    'http://blog.csdn.net/qq_34081993/article/details/78071369',
-    'http://blog.csdn.net/qq_34081993/article/details/79167963',
-]'''
+# 博客地址
 blog_url = [
     'https://blog.csdn.net/qq_34081993/article/details/80461123',
     'https://blog.csdn.net/qq_34081993/article/details/80330666',
@@ -38,15 +25,6 @@ class CSDN(object):
         self.blog_url = blog_url
         self.csdn_url = csdn_url
         self.headers = {'User-Agent': user_agent, 'Referer': refererData}
-
-    def openCsdn(self):
-        req = urllib.request.Request(self.csdn_url, headers=self.headers)
-        response = urllib.request.urlopen(req)
-        thePage = response.read()
-        response.close()
-        pattern = r"访问：<span>(\d+)次</span>"
-        number = ''.join(re.findall(pattern, thePage))
-        return number
 
     def openBlog(
             self,
@@ -67,30 +45,29 @@ class CSDN(object):
                 print("Rest ", sleepTime, " seconds to continue...\n")
                 tries += 1
                 time.sleep(sleepTime)
+            # 在CSDN 判定为攻击时可以抛出异常, 继续下一次访问
             except Exception:
                 if tries < (maxTryNum):
                     maxNum += 1
                     continue
                 else:
-                    print(
-                        "Has tried %d times to access blog link %s, all failed!"
-                        % (maxNum, link))
+                    print("Has tried %d times to access blog link %s, all failed!" % (maxNum, link))
                     break
 
     def start(self,
-              maxTime=100,
-              blOpenCsdn=False,
-              sleepTimeStart=5,
-              sleepTimeEnd=15,
-              timeout=60):
+              maxTime=100,  # maxTime 为访问 blog_url 列表的迭代次数
+              sleepTimeStart=5,  # sleepTimeMin 为最小睡眠时间
+              sleepTimeEnd=15,  # sleepTimeMax 为最大睡眠时间
+              timeout=60):  # timeout 为 blog_url 访问的最大等待时间
+        # 访问列表是随机访问的,maxTime 为访问列表的迭代次数,每次迭代的具体数量 为 len(self.blog_url)
+        # 因为是随机访问，所以访问一轮下来并非是每一篇博客都会访问到
         for i in range(maxTime * len(self.blog_url)):
+            # 随机访问 blog_url 列表
             randomLink = random.choice(self.blog_url)
             print('This tinme the random_blog link is ', randomLink)
-            if blOpenCsdn is True:
-                self.openCsdn()
             self.openBlog(
                 link=randomLink,
-                sleepTime=random.uniform(sleepTimeStart, sleepTimeEnd),
+                sleepTime=random.uniform(sleepTimeStart, sleepTimeEnd),  # 一篇博客的具体时间由随机数控制
                 timeout=timeout)
             print("Now is " + str(i + 1) + " times to acess blog link\n")
 
