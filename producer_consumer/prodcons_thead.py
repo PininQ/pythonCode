@@ -3,7 +3,9 @@ __author__ = 'QB'
 
 from queue import Queue
 import random, threading, time
-
+'''
+多对多的生产者消费者 Demo
+'''
 
 # 生产者类
 class Producer(threading.Thread):
